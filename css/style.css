@@ -1,0 +1,326 @@
+/* --- VARIABLES & RESET --- */
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --accent-color: #44c399; /* Retro Terminal Green */
+    --accent-hover: #3b9e7d;
+    --font-main: 'Courier New', Courier, monospace; /* Fallback for retro feel */
+    --font-display: 'Courier New', Courier, monospace; 
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+img, video { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
+
+/* --- TYPOGRAPHY --- */
+h1, h2, h3 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+/* --- NAVIGATION --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #333;
+    position: relative;
+}
+
+.logo { font-weight: bold; font-size: 1.2rem; border: 1px solid var(--accent-color); padding: 0.2rem 0.5rem; }
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+/* Mobile Menu Logic */
+.hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.bar { width: 25px; height: 3px; background-color: var(--accent-color); }
+
+@media (max-width: 768px) {
+    .hamburger { display: flex; z-index: 100; }
+    .nav-links {
+        position: fixed;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        width: 70%;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s ease-in-out;
+        border-left: 1px solid var(--accent-color);
+        z-index: 99;
+    }
+    .nav-links.active { right: 0; }
+}
+
+/* --- BUTTONS --- */
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    background: transparent;
+    font-family: var(--font-main);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.btn:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+/* --- SECTIONS --- */
+section { padding: var(--spacing-md) 1.5rem; max-width: 1000px; margin: 0 auto; }
+
+/* Home Hero */
+.hero { text-align: center; padding: var(--spacing-lg) 1.5rem; }
+.hero-img { 
+    width: 150px; 
+    height: 150px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 2px solid var(--accent-color); 
+    margin: 0 auto 1.5rem auto;
+}
+
+/* Sub Hero (Art) */
+.sub-hero {
+    background-color: var(--card-bg);
+    text-align: center;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+/* Contact */
+.contact-list { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; }
+.contact-list a, .nav-links a { border-bottom: 1px solid transparent; }
+.contact-list a:hover, .nav-links a:hover { border-bottom: 1px solid var(--accent-color); }
+
+/* --- PROJECTS PAGE --- */
+.project-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+@media(min-width: 768px) { .project-grid { grid-template-columns: 1fr 1fr; } }
+
+.project-card {
+    background: var(--card-bg);
+    border: 1px solid #333;
+    padding: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.project-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+.project-thumb { height: 200px; background: #333; object-fit: cover; margin-bottom: 1rem; }
+
+/* --- PROJECT DETAIL PAGES --- */
+.project-detail-container video, 
+.project-detail-container img {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border: 1px solid #333;
+}
+
+/* --- ART GALLERY (LightGallery overrides) --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #333;
+    transition: 0.3s;
+}
+
+/* For laptop/desktop sizes */
+@media (min-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    .gallery-item img {
+        height: 200px;
+    }
+}
+.gallery-item:hover img { border-color: var(--accent-color); opacity: 0.8; }
+
+/* --- TECH STACK MARQUEE --- */
+.tech-section {
+    padding: 2rem 0;
+    background-color: var(--card-bg);
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    overflow: hidden;
+    max-width: 100%;
+    position: relative;
+}
+
+/* This adds a fade effect to the left and right edges */
+.tech-section::before,
+.tech-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none; /* Allows clicking through the fade */
+}
+
+.tech-section::before {
+    left: 0;
+    background: linear-gradient(to right, var(--card-bg), transparent);
+}
+
+.tech-section::after {
+    right: 0;
+    background: linear-gradient(to left, var(--card-bg), transparent);
+}
+
+.tech-track {
+    display: flex;
+    width: max-content;
+    /* REMOVED gap property to fix the loop math */
+    animation: scroll 20s linear infinite;
+}
+
+.tech-logo {
+    height: 60px;
+    width: auto;
+    /* ADDED margin-right to replace gap */
+    margin-right: 4rem; 
+    filter: grayscale(10%);
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.tech-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* This now moves exactly half the total width seamlessly */
+        transform: translateX(-50%); 
+    }
+}
+
+.tech-track:hover {
+    animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+    .tech-logo { 
+        height: 40px; 
+        margin-right: 2rem; /* Smaller spacing on mobile */
+    }
+}
+
+/* --- SCREENSHOT CAPTIONS --- */
+.screenshot-container {
+    margin: 0 0 2rem 0; /* Space below the whole block */
+    width: 100%;
+}
+
+.screenshot-container img {
+    margin-bottom: 0.5rem; /* Small space between image and text */
+    border: 1px solid #333; /* Matches your theme borders */
+    display: block;
+}
+
+.screenshot-container figcaption {
+    font-family: var(--font-main); /* Keeps the mono font */
+    font-size: 0.9rem;
+    color: #888; /* Dimmed gray text */
+    background-color: #1a1a1a; /* Very dark background for the text bar */
+    padding: 10px;
+    border-left: 2px solid var(--accent-color); /* Green line on the left */
+    text-align: left;
+}
+
+/* Optional: Make the ">_" prefix green */
+.comment-prefix {
+    color: var(--accent-color);
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+/* --- CONTACT GRID SYSTEM --- */
+.contact-grid {
+    display: grid;
+    /* Auto-fit creates as many columns as will fit. 
+       minmax(200px, 1fr) means: "Don't get smaller than 200px, but stretch to fill space" */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center; /* Vertically center icon and text */
+    gap: 1rem; /* Space between icon and text */
+    padding: 1.5rem;
+    transition: 0.3s ease;
+    text-decoration: none;
+}
+
+/* The Icon Style */
+.contact-card i {
+    font-size: 1.8rem;
+    color: var(--accent-color); /* The retro green */
+    transition: 0.3s;
+}
+
+/* The Text Style */
+.contact-card span {
+    font-family: var(--font-main);
+    color: #ccc;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* --- HOVER EFFECTS --- */
+.contact-card:hover {
+    transform: translateY(-5px); /* Floats up slightly */
+}
+
+.contact-card:hover span {
+    color: #fff; /* Text brightens on hover */
+}
